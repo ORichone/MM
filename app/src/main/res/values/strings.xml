@@ -1,0 +1,56 @@
+<resources>
+    <string name="voltage">voltage</string>
+    <string name="cellNo">cellno</string>
+
+    <string name="app_name">Mītavas Mansardi</string>
+    <string name="sijas_m2">Sijas (m2)</string>
+    <string name="notekas_m">Notekas (m)</string>
+    <string name="jumts_m2">Jumts (m2)</string>
+
+    <string name="cena_par_vienibu">Cena par vienibu</string>
+    <string name="_2_eur_m2">2 eur/m2</string>
+    <string name="_5_eur_m2">5 eur/m2</string>
+    <string name="m2">m2</string>
+    <string name="m">m</string>
+    <string name="kop">KOPĀ</string>
+
+    <string name="jumtssegumdemont">Jumta seguma demontaža</string>
+    <string name="jumtskarkdemont">Jumta karkasa demontaža</string>
+    <string name="karkasamontza">Karkasa montaža</string>
+    <string name="plevelaktmont">Plēve + laktojums montēža</string>
+    <string name="jumtasegummon">Jumta seguma montaža</string>
+    <string name="jumtapieslegmon">Jumta pieslegumu montaža</string>
+    <string name="jumtslogumont">Jumta logu montaža</string>
+    <string name="skurtsapdare">Skurstena apdare</string>
+    <string name="skurestcaulamont">Skurstena arejas caulas izveide un montaža</string>
+    <string name="jumtstrepmont">Jumta trepju montaža</string>
+    <string name="jumtslaipasmont">Jumta laipas montaža</string>
+    <string name="vejkastesmont">Vejkastes montaža</string>
+    <string name="vejmalizveidemontbig">Vejmalas izveide un montaža (lielas)</string>
+    <string name="vejmalizveidemontsmall">Vejmalas izveide un montaža(mazas)</string>
+    <string name="palodzesizveidmont">Palodzes izveide un montaža</string>
+    <string name="notekaskartosana">Noteksistemas sakartošana</string>
+    <string name="notekasmontaza">Noteksistemas montaža</string>
+    <string name="ventrestizveidmont">Ventilazijas restes izveide un montaža</string>
+    <string name="ventizvadumont">Ventilazijas izvadu montaža</string>
+    <string name="sastatmont">Sastatņu montaža</string>
+    <string name="sastatdemont">Sastatnu demontaža</string>
+    <string name="parapetizveidmont">Parapeta izveide un montaža</string>
+    <string name="mervienības">Mervienība</string>
+    <string name="darba_nosaukums">Darbs Nosaukums</string>
+    <string-array name="maintitle">
+        <item>@string/darba_nosaukums</item>
+        <item>@string/jumtssegumdemont</item>
+        <item>@string/jumtskarkdemont</item>
+        <item>@string/karkasamontza</item>
+        <item>@string/plevelaktmont</item>
+        <item>@string/jumtasegummon</item>
+        <item>@string/skurtsapdare</item>
+        <item>@string/skurestcaulamont</item>
+        <item>@string/jumtstrepmont</item>
+        <item>@string/jumtslaipasmont</item>
+        <item>@string/vejkastesmont</item>
+        <item>@string/vejkastesmont</item>
+    </string-array>
+
+</resources>
