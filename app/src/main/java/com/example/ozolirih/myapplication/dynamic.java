@@ -239,6 +239,12 @@ public class dynamic extends Activity
 					}
 					else
 					{
+						editCena.getLayoutParams();
+						//mēģinām izdrukāt kura row un kura colona
+
+					}
+					if (1 ==1)
+					{
 						layoutParam.columnSpec = GridLayout.spec(3);
 						editQty.setLayoutParams(layoutParam);
 						//Log.d("",);
