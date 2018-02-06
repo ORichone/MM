@@ -89,50 +89,7 @@ public class dynamic extends Activity
 		Resources res = getResources();
 		String[] worktitle = res.getStringArray(R.array.maintitle);
 
-		watcher = new TextWatcher()
-		{
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count)
-			{}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after)
-			{}
-
-			@Override
-			public void afterTextChanged(Editable s)
-			{
-
-				showText = new TextView(dynamic.this);
-
-				String asd = s.toString();
-				Log.d("DEBUG", "Sākotnējais strings = " + s.toString());
-				Log.d("DEBUG", "Izmainītais strings = " + asd);
-
-
-
-
-				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
-				showText.setGravity(TOP);
-				showText.setBackgroundColor(WHITE);
-				showText.setTextColor(BLUE);
-				showText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-				showText.setText(asd);
-
-				int zzz = editQty.getId();
-				layoutParam.setMargins(2, 2, 2, 2);
-				layoutParam.rowSpec = GridLayout.spec(zzz);
-				layoutParam.columnSpec = GridLayout.spec(5);
-				Log.d("DEBUG", "ROW = "+ zzz);
-
-
-				showText.setLayoutParams(layoutParam);
-				gridLayout.addView(showText);
-
-			}
-		};
-
-		for ( c = 0; c < 6; c++)
+			for ( c = 0; c < 6; c++)
 		{
 
 			int listSize = worktitle.length;
@@ -248,10 +205,54 @@ public class dynamic extends Activity
 						editQty.setText(Integer.toString(r));
 
 						layoutParam.setGravity(BOTTOM);
+
+						editQty.addTextChangedListener(new TextWatcher()
+						{
+							@Override
+							public void onTextChanged(CharSequence s, int start, int before, int count){}
+
+							@Override
+							public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+
+							@Override
+							public void afterTextChanged(Editable s)
+							{
+
+
+								String asd = s.toString();
+//								Log.d("DEBUG", "Sākos strings = " + s.toString());
+								Log.d("DEBUG", "Izmainītais strings = " + asd);
+
+
+								GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
+
+
+								showText = new TextView(dynamic.this);
+								showText.setGravity(TOP);
+								showText.setBackgroundColor(WHITE);
+								showText.setTextColor(BLUE);
+								showText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+								showText.setText(asd);
+
+								int zzz = editQty.getId();
+								layoutParam.setMargins(2, 2, 2, 2);
+								layoutParam.rowSpec = GridLayout.spec(r);
+								layoutParam.columnSpec = GridLayout.spec(5);
+								Log.d("DEBUG", "ROW = "+ zzz);
+
+								showText.setLayoutParams(layoutParam);
+
+								gridLayout.addView(showText);
+
+							}
+						});
 						editQty.setLayoutParams(layoutParam);
 						gridLayout.addView(editQty);
 
-						editQty.addTextChangedListener(watcher);
+
+
+
+
 						int s = editQty.getId();
 						Log.d("DEBUG", "EditQty ID = "+ s);
 
