@@ -52,6 +52,8 @@ public class dynamic extends Activity
 
 	public EditText resultTxt;
 	public EditText resultTxt1;
+	public EditText editQty;
+
 	public TextView showText;
 	public TextWatcher watcher;
 	public GridLayout gridLayout;
@@ -107,6 +109,9 @@ public class dynamic extends Activity
 				Log.d("DEBUG", "Sākotnējais strings = " + s.toString());
 				Log.d("DEBUG", "Izmainītais strings = " + asd);
 
+
+
+
 				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
 				showText.setGravity(TOP);
 				showText.setBackgroundColor(WHITE);
@@ -114,10 +119,11 @@ public class dynamic extends Activity
 				showText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 				showText.setText(asd);
 
+				int zzz = editQty.getId();
 				layoutParam.setMargins(2, 2, 2, 2);
-				layoutParam.rowSpec = GridLayout.spec(r);
+				layoutParam.rowSpec = GridLayout.spec(zzz);
 				layoutParam.columnSpec = GridLayout.spec(5);
-				Log.d("DEBUG", "ROW = "+ r +" COLONA = " + c);
+				Log.d("DEBUG", "ROW = "+ zzz);
 
 
 				showText.setLayoutParams(layoutParam);
@@ -135,7 +141,6 @@ public class dynamic extends Activity
 			for (r = 0, nr = 0; r < listSize; r++, nr++)
 			{
 				EditText editCena = new EditText(this);
-				EditText editQty = new EditText(this);
 				TextView textView = new TextView(this);
 				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
 
@@ -230,9 +235,10 @@ public class dynamic extends Activity
 					}
 					else
 					{
-						//EditText editQty = new EditText(this);
 
-						//editQty.setTextAlignment(3);
+						editQty = new EditText(dynamic.this);
+
+						editQty.setId(r);
 						editQty.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 						editQty.setBackgroundColor(WHITE);
 						editQty.setTextColor(RED);
@@ -242,13 +248,11 @@ public class dynamic extends Activity
 						editQty.setText(Integer.toString(r));
 
 						layoutParam.setGravity(BOTTOM);
-						editQty.addTextChangedListener(watcher);
 						editQty.setLayoutParams(layoutParam);
 						gridLayout.addView(editQty);
 
-						ViewGroup.LayoutParams e = editQty.getLayoutParams();
+						editQty.addTextChangedListener(watcher);
 						int s = editQty.getId();
-						Log.d("DEBUG", "Layout parametri = "+ e);
 						Log.d("DEBUG", "EditQty ID = "+ s);
 
 					}
