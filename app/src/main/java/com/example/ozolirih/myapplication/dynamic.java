@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
@@ -43,11 +46,25 @@ import static com.example.ozolirih.myapplication.R.layout.activity_second;
 public class dynamic extends Activity
 {
 
+	//EditText resultTxt = new EditText(this);
+	//EditText resultTxt1 = new EditText(this);
+	//EditText showText = new EditText(this);
+
+	public EditText resultTxt;
+	public EditText resultTxt1;
+	public TextView showText;
+	public TextWatcher watcher;
+	public GridLayout gridLayout;
+	int r, c, nr;
+
+
 	@SuppressLint({"WrongConstant", "RtlHardcoded", "LongLogTag"})
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+
 
 		int column = 6;
 		int row = 20;
@@ -55,7 +72,7 @@ public class dynamic extends Activity
 
 
 		ScrollView scrollView = new ScrollView(this);
-		GridLayout gridLayout = new GridLayout(this);
+		gridLayout = new GridLayout(this);
 		scrollView.addView(gridLayout);
 
 		setContentView(scrollView);
@@ -70,14 +87,52 @@ public class dynamic extends Activity
 		Resources res = getResources();
 		String[] worktitle = res.getStringArray(R.array.maintitle);
 
+		watcher = new TextWatcher()
+		{
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count)
+			{}
 
-		for (int c = 0; c < 6; c++)
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after)
+			{}
+
+			@Override
+			public void afterTextChanged(Editable s)
+			{
+
+				showText = new TextView(dynamic.this);
+
+				String asd = s.toString();
+				Log.d("DEBUG", "Sākotnējais strings = " + s.toString());
+				Log.d("DEBUG", "Izmainītais strings = " + asd);
+
+				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
+				showText.setGravity(TOP);
+				showText.setBackgroundColor(WHITE);
+				showText.setTextColor(BLUE);
+				showText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				showText.setText(asd);
+
+				layoutParam.setMargins(2, 2, 2, 2);
+				layoutParam.rowSpec = GridLayout.spec(r);
+				layoutParam.columnSpec = GridLayout.spec(5);
+				Log.d("DEBUG", "ROW = "+ r +" COLONA = " + c);
+
+
+				showText.setLayoutParams(layoutParam);
+				gridLayout.addView(showText);
+
+			}
+		};
+
+		for ( c = 0; c < 6; c++)
 		{
 
 			int listSize = worktitle.length;
 			//Set default price
 
-			for (int r = 0, nr = 0; r < listSize; r++, nr++)
+			for (r = 0, nr = 0; r < listSize; r++, nr++)
 			{
 				EditText editCena = new EditText(this);
 				EditText editQty = new EditText(this);
@@ -95,6 +150,7 @@ public class dynamic extends Activity
 				layoutParam.setMargins(2, 2, 2, 2);
 				layoutParam.rowSpec = GridLayout.spec(r);
 				layoutParam.columnSpec = GridLayout.spec(c);
+
 
 				if (c == 0)
 				{
@@ -186,9 +242,15 @@ public class dynamic extends Activity
 						editQty.setText(Integer.toString(r));
 
 						layoutParam.setGravity(BOTTOM);
-
+						editQty.addTextChangedListener(watcher);
 						editQty.setLayoutParams(layoutParam);
 						gridLayout.addView(editQty);
+
+						ViewGroup.LayoutParams e = editQty.getLayoutParams();
+						int s = editQty.getId();
+						Log.d("DEBUG", "Layout parametri = "+ e);
+						Log.d("DEBUG", "EditQty ID = "+ s);
+
 					}
 				}
 
@@ -239,51 +301,14 @@ public class dynamic extends Activity
 					}
 					else
 					{
-						editCena.getLayoutParams();
-						//mēģinām izdrukāt kura row un kura colona
-
-					}
-					if (1 ==1)
-					{
-						layoutParam.columnSpec = GridLayout.spec(3);
-						editQty.setLayoutParams(layoutParam);
-						//Log.d("",);
-
-						//int sum = 0;
-
-						String sum1 = "777";
-						sum1 = editQty.getText().toString();
-						Log.d("SUM1 = ",sum1);
-						int sum1int = 333;
-						//sum1int = Integer.parseInt(sum1);
-						Log.d("MYINT", "111 = " + sum1int);
-
-
-						layoutParam.columnSpec = GridLayout.spec(4);
-						editCena.setLayoutParams(layoutParam);
-
-						String sum2 = "Kautkas";
-						sum2 = editCena.getText().toString();
-						Log.d("SUM2 ", sum2);
-						int sum2int = 777;
-						//int sum2int = Integer.parseInt(sum2);
-						Log.d("MYINT", "222 = " + sum2int);
-
-
-						String txt = String.valueOf(sum1int * sum2int);
+						textView.setBackgroundColor(WHITE);
 						textView.setGravity(CENTER_HORIZONTAL);
-						textView.setText(txt);
+						//textView.setText(txt);
 
-
-						layoutParam.columnSpec = GridLayout.spec(c);
 						textView.setLayoutParams(layoutParam);
 						gridLayout.addView(textView);
 					}
-
-
-
 				}
-
 			}
 		}
 	}
