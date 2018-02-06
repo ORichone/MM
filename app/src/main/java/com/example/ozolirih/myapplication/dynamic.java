@@ -237,20 +237,27 @@ public class dynamic extends Activity
 						textView.setLayoutParams(layoutParam);
 						gridLayout.addView(textView);
 					}
-					else
+					/*else
 					{
+
+
+
 						layoutParam.columnSpec = GridLayout.spec(3);
 						editQty.setLayoutParams(layoutParam);
+						currRow = editQty.getLayoutParams();
+
 						//Log.d("",);
 
 						//int sum = 0;
 
+						editQty.getLayoutParams(GridLayout);
 						String sum1 = "777";
 						sum1 = editQty.getText().toString();
-						Log.d("SUM1 = ",sum1);
+						Log.d("SUM1 = ","" + sum1);
 						int sum1int = 333;
 						//sum1int = Integer.parseInt(sum1);
-						Log.d("MYINT", "111 = " + sum1int);
+						//Log.d("MYINT", "111 = " + sum1int);
+						Log.d("MYINT", "Shis ir sum1 strings = " + sum1);
 
 
 						layoutParam.columnSpec = GridLayout.spec(4);
@@ -272,7 +279,7 @@ public class dynamic extends Activity
 						layoutParam.columnSpec = GridLayout.spec(c);
 						textView.setLayoutParams(layoutParam);
 						gridLayout.addView(textView);
-					}
+					}*/
 
 
 
