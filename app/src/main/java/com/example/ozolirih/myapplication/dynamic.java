@@ -56,8 +56,53 @@ public class dynamic extends Activity
 
 	public TextView showText;
 	public TextWatcher watcher;
+
 	public GridLayout gridLayout;
 	int r, c, nr;
+
+	protected TextWatcher getWatcher(int sss){
+		final int id = sss;
+		watcher = new TextWatcher()
+		{
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count){}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+
+			@Override
+			public void afterTextChanged(Editable s)
+			{
+
+				String asd = s.toString();
+//				Log.d("DEBUG", "Sākos strings = " + s.toString());
+				Log.d("DEBUG", "Izmainītais strings = " + asd);
+
+
+				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
+
+
+				showText = new TextView(dynamic.this);
+				showText.setGravity(TOP);
+				showText.setBackgroundColor(WHITE);
+				showText.setTextColor(BLUE);
+				showText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				showText.setText(asd);
+
+				int zzz = editQty.getId();
+				layoutParam.setMargins(2, 2, 2, 2);
+				layoutParam.rowSpec = GridLayout.spec(id);
+				layoutParam.columnSpec = GridLayout.spec(5);
+				Log.d("DEBUG", "ID = "+ id);
+
+				showText.setLayoutParams(layoutParam);
+
+				gridLayout.addView(showText);
+
+			}
+		};
+		return watcher;
+	}
 
 
 	@SuppressLint({"WrongConstant", "RtlHardcoded", "LongLogTag"})
@@ -89,14 +134,17 @@ public class dynamic extends Activity
 		Resources res = getResources();
 		String[] worktitle = res.getStringArray(R.array.maintitle);
 
-			for ( c = 0; c < 6; c++)
+		for ( c = 0; c < 6; c++)
 		{
+			Log.d("DEBUG", "/////// pirmais cikls "+ c);
 
 			int listSize = worktitle.length;
 			//Set default price
 
 			for (r = 0, nr = 0; r < listSize; r++, nr++)
 			{
+				Log.d("DEBUG", "/////// Otrais cikls " + r);
+
 				EditText editCena = new EditText(this);
 				TextView textView = new TextView(this);
 				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
@@ -202,50 +250,12 @@ public class dynamic extends Activity
 						editQty.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 						editQty.setInputType(2 | 8192);
 						editQty.setPadding(10, 0, 10, 0);
-						editQty.setText(Integer.toString(r));
+						//editQty.setText(Integer.toString(r));
 
 						layoutParam.setGravity(BOTTOM);
 
-						editQty.addTextChangedListener(new TextWatcher()
-						{
-							@Override
-							public void onTextChanged(CharSequence s, int start, int before, int count){}
+						//editQty.addTextChangedListener(getWatcher(r));
 
-							@Override
-							public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-
-							@Override
-							public void afterTextChanged(Editable s)
-							{
-
-
-								String asd = s.toString();
-//								Log.d("DEBUG", "Sākos strings = " + s.toString());
-								Log.d("DEBUG", "Izmainītais strings = " + asd);
-
-
-								GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
-
-
-								showText = new TextView(dynamic.this);
-								showText.setGravity(TOP);
-								showText.setBackgroundColor(WHITE);
-								showText.setTextColor(BLUE);
-								showText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-								showText.setText(asd);
-
-								int zzz = editQty.getId();
-								layoutParam.setMargins(2, 2, 2, 2);
-								layoutParam.rowSpec = GridLayout.spec(r);
-								layoutParam.columnSpec = GridLayout.spec(5);
-								Log.d("DEBUG", "ROW = "+ zzz);
-
-								showText.setLayoutParams(layoutParam);
-
-								gridLayout.addView(showText);
-
-							}
-						});
 						editQty.setLayoutParams(layoutParam);
 						gridLayout.addView(editQty);
 
@@ -291,7 +301,7 @@ public class dynamic extends Activity
 					}
 				}
 
-				if (c == 5)
+				/*if (c == 5)
 				{
 					layoutParam.width = 250;
 					layoutParam.height = 150;
@@ -313,7 +323,7 @@ public class dynamic extends Activity
 						textView.setLayoutParams(layoutParam);
 						gridLayout.addView(textView);
 					}
-				}
+				}*/
 			}
 		}
 	}
