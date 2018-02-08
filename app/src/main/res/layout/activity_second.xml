@@ -308,7 +308,9 @@
                             android:layout_row="1"
 
                             android:text="@string/mervienības"
-                            android:textAlignment="center"
+                            android:gravity="center"
+                            android:layout_gravity="center
+"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             android:textStyle=""
@@ -347,6 +349,7 @@
                         <EditText
                             android:id="@+id/jumtsSegumDemontQty"
                             android:layout_width="60dp"
+
                             android:layout_height="40dp"
                             android:layout_column="2"
                             android:layout_row="1"

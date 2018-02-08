@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -33,9 +35,12 @@ import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.CENTER;
 import static android.view.Gravity.CENTER_HORIZONTAL;
 import static android.view.Gravity.CENTER_VERTICAL;
+import static android.view.Gravity.END;
 import static android.view.Gravity.FILL;
+import static android.view.Gravity.FILL_HORIZONTAL;
 import static android.view.Gravity.LEFT;
 import static android.view.Gravity.NO_GRAVITY;
+import static android.view.Gravity.RIGHT;
 import static android.view.Gravity.TOP;
 import static com.example.ozolirih.myapplication.R.layout.activity_second;
 
@@ -54,7 +59,7 @@ public class dynamic extends Activity
 	public EditText resultTxt1;
 	public EditText editQty;
 
-	public TextView showText;
+	//public TextView showText;
 	public TextWatcher watcher;
 
 	public GridLayout gridLayout;
@@ -62,8 +67,10 @@ public class dynamic extends Activity
 
 	protected TextWatcher getWatcher(int sss){
 		final int id = sss;
+
 		watcher = new TextWatcher()
 		{
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count){}
 
@@ -81,24 +88,31 @@ public class dynamic extends Activity
 
 				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
 
+				TextView showText = new TextView(dynamic.this);
 
-				showText = new TextView(dynamic.this);
-				showText.setGravity(TOP);
+				Log.d("DEBUG", "Watcher ID = "+ id);
+				int childInx = ((c-1) * (r)) + id;
+				Log.d("DEBUG", "Child ID = "+ childInx + " r = " + r + " c = " + (c-1));
+
+
+
+				showText.setPadding(25, 0, 0, 0);
+				showText.setGravity(CENTER_VERTICAL);
 				showText.setBackgroundColor(WHITE);
 				showText.setTextColor(BLUE);
-				showText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				showText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 				showText.setText(asd);
 
-				int zzz = editQty.getId();
+				layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
 				layoutParam.setMargins(2, 2, 2, 2);
 				layoutParam.rowSpec = GridLayout.spec(id);
 				layoutParam.columnSpec = GridLayout.spec(5);
-				Log.d("DEBUG", "ID = "+ id);
+
+				layoutParam.height = 150;
+
 
 				showText.setLayoutParams(layoutParam);
-
 				gridLayout.addView(showText);
-
 			}
 		};
 		return watcher;
@@ -152,18 +166,20 @@ public class dynamic extends Activity
 				//textView.setTextAlignment(1);
 
 
-				textView.setGravity(TOP);
+				textView.setGravity(CENTER);
 				textView.setBackgroundColor(WHITE);
 				textView.setTextColor(BLUE);
 				textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 
+
 				layoutParam.setMargins(2, 2, 2, 2);
 				layoutParam.rowSpec = GridLayout.spec(r);
 				layoutParam.columnSpec = GridLayout.spec(c);
-
+				layoutParam.setGravity(CENTER);
 
 				if (c == 0)
 				{
+
 					if (nr > 0)
 					{
 						String number = Integer.toString(nr);
@@ -183,17 +199,17 @@ public class dynamic extends Activity
 				}
 
 				if (c == 1)
-				{
+				{textView.setGravity(CENTER_VERTICAL);
 					textView.setPadding(25, 0, 0, 0);
 					if (r == 0)
 					{
-						textView.setGravity(CENTER_VERTICAL);
+						//textView.setGravity(CENTER_VERTICAL);
 						textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
 						textView.setPadding(0, 0, 0, 0);
 						layoutParam.setGravity(BOTTOM);
 					}
 					textView.setText(worktitle[r]);
-					layoutParam.width = 650;
+					layoutParam.width = 750;
 					layoutParam.height = 150;
 
 					textView.setLayoutParams(layoutParam);
@@ -203,6 +219,11 @@ public class dynamic extends Activity
 
 				if (c == 2)
 				{
+					layoutParam.width = 150;
+					layoutParam.height = 150;
+					layoutParam.setGravity(CENTER|LEFT);
+					textView.setLayoutParams(layoutParam);
+
 					textView.setGravity(CENTER_HORIZONTAL);
 					if (r != 0)
 					{
@@ -215,10 +236,6 @@ public class dynamic extends Activity
 						textView.setText(merv);
 					}
 
-					layoutParam.width = 150;
-					layoutParam.height = 150;
-
-					textView.setLayoutParams(layoutParam);
 					gridLayout.addView(textView);
 
 				}
@@ -228,9 +245,10 @@ public class dynamic extends Activity
 
 					layoutParam.width = 250;
 					layoutParam.height = 150;
+					layoutParam.setGravity(CENTER|RIGHT);
 					if (r == 0)
 					{
-						String m = "Daudzums";
+						String m = "Dau";
 						textView.setGravity(CENTER_HORIZONTAL);
 						textView.setText(m);
 
@@ -251,10 +269,11 @@ public class dynamic extends Activity
 						editQty.setInputType(2 | 8192);
 						editQty.setPadding(10, 0, 10, 0);
 						//editQty.setText(Integer.toString(r));
+						editQty.setGravity(CENTER|RIGHT);
 
-						layoutParam.setGravity(BOTTOM);
 
-						//editQty.addTextChangedListener(getWatcher(r));
+
+						editQty.addTextChangedListener(getWatcher(r));
 
 						editQty.setLayoutParams(layoutParam);
 						gridLayout.addView(editQty);
@@ -271,8 +290,9 @@ public class dynamic extends Activity
 
 				if (c == 4)
 				{
-					layoutParam.width = 250;
+					layoutParam.width = 180;
 					layoutParam.height = 150;
+					layoutParam.setGravity(CENTER|LEFT);
 					if (r == 0)
 					{
 						String cena = "Cena";
@@ -294,16 +314,19 @@ public class dynamic extends Activity
 						editCena.setPadding(10, 0, 10, 0);
 						editCena.setText("1");
 
-						layoutParam.setGravity(BOTTOM);
+						//layoutParam.setGravity(BOTTOM);
 
 						editCena.setLayoutParams(layoutParam);
 						gridLayout.addView(editCena);
 					}
 				}
 
-				/*if (c == 5)
+				if (c == 5)
 				{
-					layoutParam.width = 250;
+					layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
+
+					//layoutParam.width = 250;
+					//layoutParam.setGravity(7);
 					layoutParam.height = 150;
 					if (r == 0)
 					{
@@ -317,13 +340,15 @@ public class dynamic extends Activity
 					else
 					{
 						textView.setBackgroundColor(WHITE);
-						textView.setGravity(CENTER_HORIZONTAL);
+						//textView.setGravity(CENTER_HORIZONTAL);
 						//textView.setText(txt);
 
 						textView.setLayoutParams(layoutParam);
+						int childCount = gridLayout.getChildCount();
+						Log.d("DEBUG", "childCount ID = "+ childCount);
 						gridLayout.addView(textView);
 					}
-				}*/
+				}
 			}
 		}
 	}
