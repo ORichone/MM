@@ -53,14 +53,16 @@ public class dynamic extends Activity
 {
 
 	public EditText editQty;
+	public EditText editCena;
 	public TextView showText;
 	public TextWatcher watcher;
 
 	public GridLayout gridLayout;
 	int r;
 
-	protected TextWatcher getWatcher(int sss){
-		final int id = sss;
+	protected TextWatcher getWatcher(int rinda, int colona){
+		final int row = rinda;
+		final int col = colona;
 
 
 		watcher = new TextWatcher()
@@ -78,17 +80,72 @@ public class dynamic extends Activity
 
 				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
 
-				String asd = s.toString();
+				String myString = s.toString();
+				if (myString.length() == 0)
+				{
+					myString = "0";
+				}
+				double jaunaistxt1 = Double.parseDouble(myString);
+				double jaunaistxt = 0;
 
-				TextView txtView = gridLayout.findViewById(id);
-				layoutParam.rowSpec = GridLayout.spec(id);
+				Log.d("DEBUG", "Iegutais jaunais txt no view = " + jaunaistxt1 );
+				Log.d("ROW", "ROW = " + row);
+				Log.d("COL", "COL = " + col);
+
+				int viewID = 0;
+				int summaid = ((5 * 10) + row);
+				TextView summaView = gridLayout.findViewById(summaid);
+				Log.d("DEBUG", "Summa ID = " + summaid );
+
+				if (col == 3)
+				{
+					viewID = (((col+1) * 10) + row);
+					TextView cenaView = gridLayout.findViewById(viewID);
+					CharSequence ii = cenaView.getText();
+					Log.d("DEBUG", "rrrrooooowww " + row );
+					Log.d("DEBUG", "Text to col + 1 = " + ii );
+
+					String starpa = String.valueOf(ii);
+					double number;
+					number = Double.parseDouble(starpa);
+					jaunaistxt = (number * jaunaistxt1);
+					Log.d("DEBUG", "Cenaview ID  = " + viewID );
+					Log.d("DEBUG", " CenaView number = " + number );
+
+				}
+				else if (col == 4)
+				{
+					viewID = (((col-1) * 10) + row);
+					TextView qtyView = gridLayout.findViewById(viewID);
+					CharSequence ii = qtyView.getText();
+
+
+					String starpa = String.valueOf(ii);
+					double number;
+					number = Double.parseDouble(starpa);
+					jaunaistxt = (number * jaunaistxt1);
+					Log.d("DEBUG", " qtyView ID  = " + viewID );
+					Log.d("DEBUG", " qtyView number = " + number );
+
+				}
+
+				Log.d("DEBUG", "ViewID  = " + viewID );
+				Log.d("DEBUG", "SummID = " + summaid);
+				Log.d("DEBUG", "jaunaistxt = " + jaunaistxt);
+
+
+
+
+
+				layoutParam.rowSpec = GridLayout.spec(row);
 				layoutParam.columnSpec = GridLayout.spec(5);
 				layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
 				layoutParam.setMargins(2, 2, 2, 2);
 				layoutParam.height = 150;
-
-				txtView.setText(asd);
-				txtView.setLayoutParams(layoutParam);
+				double roundOff = Math.round(jaunaistxt * 100.0) / 100.0;
+				String jaunaistxt2 = String.valueOf(roundOff);
+				summaView.setText(jaunaistxt2);
+				summaView.setLayoutParams(layoutParam);
 
 			}
 		};
@@ -102,12 +159,20 @@ public class dynamic extends Activity
 
 		int column = 6;
 		int row = 20;
-		int total = column * row;
+		//int total = column * row;
 
 		ScrollView scrollView = new ScrollView(this);
 		gridLayout = new GridLayout(this);
 		scrollView.addView(gridLayout);
 		setContentView(scrollView);
+
+		/*GridLayout topLine = new GridLayout( this );
+		TextView total = new TextView( this );
+		total.setText( "RE kur IR" );
+		GridLayout.LayoutParams topLayout= new GridLayout.LayoutParams();
+		topLayout.setGravity( CENTER );
+		total.setLayoutParams( topLayout );
+		setContentView( topLine );*/
 
 		gridLayout.setColumnCount(column);
 		gridLayout.setRowCount(row);
@@ -121,7 +186,6 @@ public class dynamic extends Activity
 			int listSize = worktitle.length;
 			for (r = 0; r < listSize; r++)
 			{
-				EditText editCena = new EditText(this);
 				TextView textView = new TextView(this);
 				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
 
@@ -221,8 +285,10 @@ public class dynamic extends Activity
 						editQty.setInputType(2 | 8192);
 						editQty.setPadding(10, 0, 10, 0);
 						editQty.setGravity(CENTER|RIGHT);
-						editQty.addTextChangedListener(getWatcher(r));
+						editQty.addTextChangedListener(getWatcher(r,c));
 						editQty.setLayoutParams(layoutParam);
+						int qtyId = (c*10 + r);
+						editQty.setId(qtyId);
 
 						gridLayout.addView(editQty);
 					}
@@ -244,15 +310,19 @@ public class dynamic extends Activity
 					}
 					else
 					{
+						editCena = new EditText(dynamic.this);
 						editCena.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 						editCena.setBackgroundColor(WHITE);
 						editCena.setTextColor(GREEN);
 						editCena.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 						editCena.setInputType(2 | 8192);
 						editCena.setPadding(10, 0, 10, 0);
-						editCena.setText("1");
-
+						editCena.setText("2");
+						editCena.addTextChangedListener(getWatcher(r,c));
 						editCena.setLayoutParams(layoutParam);
+						int cenaid = (c*10 + r);
+						editCena.setId(cenaid);
+
 						gridLayout.addView(editCena);
 					}
 				}
@@ -267,7 +337,6 @@ public class dynamic extends Activity
 						String cena = "Summa";
 						textView.setGravity(CENTER_HORIZONTAL);
 						textView.setText(cena);
-
 						textView.setLayoutParams(layoutParam);
 						gridLayout.addView(textView);
 					}
@@ -276,7 +345,9 @@ public class dynamic extends Activity
 						showText = new TextView(dynamic.this);
 						showText.setBackgroundColor(WHITE);
 						showText.setLayoutParams(layoutParam);
-						showText.setId( r );
+						int summaid = (c*10 + r);
+						Log.d("SUMMAID", "Summas ID = " + summaid);
+						showText.setId(summaid);
 						gridLayout.addView(showText);
 
 					}
