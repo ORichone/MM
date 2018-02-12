@@ -80,63 +80,54 @@ public class dynamic extends Activity
 
 				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
 
+				int summaid = ((5 * 100) + row);
+				TextView summaView = gridLayout.findViewById(summaid);
+
 				String myString = s.toString();
 				if (myString.length() == 0)
 				{
 					myString = "0";
 				}
-				double jaunaistxt1 = Double.parseDouble(myString);
-				double jaunaistxt = 0;
 
-				Log.d("DEBUG", "Iegutais jaunais txt no view = " + jaunaistxt1 );
-				Log.d("ROW", "ROW = " + row);
-				Log.d("COL", "COL = " + col);
+				double jaunaistxt = 0;
+				double jaunaistxt1 = Double.parseDouble(myString);
+
 
 				int viewID = 0;
-				int summaid = ((5 * 10) + row);
-				TextView summaView = gridLayout.findViewById(summaid);
-				Log.d("DEBUG", "Summa ID = " + summaid );
-
 				if (col == 3)
 				{
-					viewID = (((col+1) * 10) + row);
+					viewID = (((col+1) * 100) + row);
 					TextView cenaView = gridLayout.findViewById(viewID);
 					CharSequence ii = cenaView.getText();
-					Log.d("DEBUG", "rrrrooooowww " + row );
-					Log.d("DEBUG", "Text to col + 1 = " + ii );
+					if (ii.length() == 0)
+					{
+						ii = "0";
+					}
 
 					String starpa = String.valueOf(ii);
-					double number;
-					number = Double.parseDouble(starpa);
+					double number = Double.parseDouble(starpa);
 					jaunaistxt = (number * jaunaistxt1);
-					Log.d("DEBUG", "Cenaview ID  = " + viewID );
-					Log.d("DEBUG", " CenaView number = " + number );
-
 				}
 				else if (col == 4)
 				{
-					viewID = (((col-1) * 10) + row);
+					viewID = (((col-1) * 100) + row);
 					TextView qtyView = gridLayout.findViewById(viewID);
 					CharSequence ii = qtyView.getText();
-
+					if (ii.length() == 0)
+					{
+						ii = "0";
+					}
 
 					String starpa = String.valueOf(ii);
-					double number;
-					number = Double.parseDouble(starpa);
-					jaunaistxt = (number * jaunaistxt1);
-					Log.d("DEBUG", " qtyView ID  = " + viewID );
-					Log.d("DEBUG", " qtyView number = " + number );
+					double number = Double.parseDouble(starpa);
 
+					jaunaistxt = (number * jaunaistxt1);
 				}
 
-				Log.d("DEBUG", "ViewID  = " + viewID );
-				Log.d("DEBUG", "SummID = " + summaid);
-				Log.d("DEBUG", "jaunaistxt = " + jaunaistxt);
+				summaView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
-
-
-
-
+				summaView.setGravity(CENTER);
+				summaView.setTextColor( BLACK );
 				layoutParam.rowSpec = GridLayout.spec(row);
 				layoutParam.columnSpec = GridLayout.spec(5);
 				layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
@@ -212,7 +203,7 @@ public class dynamic extends Activity
 						textView.setBackgroundColor(RED);
 					}
 
-					layoutParam.width = 50;
+					layoutParam.width =100;
 					layoutParam.height = 150;
 
 					textView.setLayoutParams(layoutParam);
@@ -287,7 +278,7 @@ public class dynamic extends Activity
 						editQty.setGravity(CENTER|RIGHT);
 						editQty.addTextChangedListener(getWatcher(r,c));
 						editQty.setLayoutParams(layoutParam);
-						int qtyId = (c*10 + r);
+						int qtyId = (c*100 + r);
 						editQty.setId(qtyId);
 
 						gridLayout.addView(editQty);
@@ -313,14 +304,15 @@ public class dynamic extends Activity
 						editCena = new EditText(dynamic.this);
 						editCena.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 						editCena.setBackgroundColor(WHITE);
-						editCena.setTextColor(GREEN);
+						editCena.setTextColor(0xFF004C00);
+						editCena.setGravity( CENTER );
 						editCena.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 						editCena.setInputType(2 | 8192);
 						editCena.setPadding(10, 0, 10, 0);
 						editCena.setText("2");
 						editCena.addTextChangedListener(getWatcher(r,c));
 						editCena.setLayoutParams(layoutParam);
-						int cenaid = (c*10 + r);
+						int cenaid = (c*100 + r);
 						editCena.setId(cenaid);
 
 						gridLayout.addView(editCena);
@@ -345,7 +337,7 @@ public class dynamic extends Activity
 						showText = new TextView(dynamic.this);
 						showText.setBackgroundColor(WHITE);
 						showText.setLayoutParams(layoutParam);
-						int summaid = (c*10 + r);
+						int summaid = (c*100 + r);
 						Log.d("SUMMAID", "Summas ID = " + summaid);
 						showText.setId(summaid);
 						gridLayout.addView(showText);
