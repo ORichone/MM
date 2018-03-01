@@ -80,54 +80,71 @@ public class dynamic extends Activity
 
 				GridLayout.LayoutParams layoutParam = new GridLayout.LayoutParams();
 
-				int summaid = ((5 * 100) + row);
-				TextView summaView = gridLayout.findViewById(summaid);
-
 				String myString = s.toString();
 				if (myString.length() == 0)
 				{
 					myString = "0";
 				}
-
-				double jaunaistxt = 0;
 				double jaunaistxt1 = Double.parseDouble(myString);
+				double jaunaistxt = 0;
 
+				Log.d("DEBUG", "Iegutais jaunais txt no view = " + jaunaistxt1 );
+				Log.d("ROW", "ROW = " + row);
+				Log.d("COL", "COL = " + col);
 
 				int viewID = 0;
+				int summaid = ((5 * 100) + row);
+				TextView summaView = gridLayout.findViewById(summaid);
+				Log.d("DEBUG", "Summa ID = " + summaid );
+
 				if (col == 3)
 				{
 					viewID = (((col+1) * 100) + row);
 					TextView cenaView = gridLayout.findViewById(viewID);
 					CharSequence ii = cenaView.getText();
+					Log.d("DEBUG", "rrrrooooowww " + row );
+					Log.d("DEBUG", "Text to col + 1 = " + ii );
 					if (ii.length() == 0)
 					{
 						ii = "0";
 					}
 
 					String starpa = String.valueOf(ii);
-					double number = Double.parseDouble(starpa);
+					double number;
+					number = Double.parseDouble(starpa);
 					jaunaistxt = (number * jaunaistxt1);
+					Log.d("DEBUG", "Cenaview ID  = " + viewID );
+					Log.d("DEBUG", " CenaView number = " + number );
+
 				}
 				else if (col == 4)
 				{
 					viewID = (((col-1) * 100) + row);
 					TextView qtyView = gridLayout.findViewById(viewID);
 					CharSequence ii = qtyView.getText();
+					Log.d("DEBUG", "II" + ii );
 					if (ii.length() == 0)
 					{
 						ii = "0";
 					}
 
 					String starpa = String.valueOf(ii);
-					double number = Double.parseDouble(starpa);
-
+					double number;
+					number = Double.parseDouble(starpa);
 					jaunaistxt = (number * jaunaistxt1);
+					Log.d("DEBUG", " qtyView ID  = " + viewID );
+					Log.d("DEBUG", " qtyView number = " + number );
+
 				}
 
-				summaView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+				Log.d("DEBUG", "ViewID  = " + viewID );
+				Log.d("DEBUG", "SummID = " + summaid);
+				Log.d("DEBUG", "jaunaistxt = " + jaunaistxt);
 
-				summaView.setGravity(CENTER);
-				summaView.setTextColor( BLACK );
+
+
+
+
 				layoutParam.rowSpec = GridLayout.spec(row);
 				layoutParam.columnSpec = GridLayout.spec(5);
 				layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
@@ -135,6 +152,9 @@ public class dynamic extends Activity
 				layoutParam.height = 150;
 				double roundOff = Math.round(jaunaistxt * 100.0) / 100.0;
 				String jaunaistxt2 = String.valueOf(roundOff);
+
+				Log.d("DEBUG", "jaunaistxt2 = " + jaunaistxt2);
+
 				summaView.setText(jaunaistxt2);
 				summaView.setLayoutParams(layoutParam);
 
@@ -203,7 +223,7 @@ public class dynamic extends Activity
 						textView.setBackgroundColor(RED);
 					}
 
-					layoutParam.width =100;
+					layoutParam.width = 50;
 					layoutParam.height = 150;
 
 					textView.setLayoutParams(layoutParam);
@@ -279,6 +299,7 @@ public class dynamic extends Activity
 						editQty.addTextChangedListener(getWatcher(r,c));
 						editQty.setLayoutParams(layoutParam);
 						int qtyId = (c*100 + r);
+						Log.d("QTY ID ", "QTY ID = " + qtyId);
 						editQty.setId(qtyId);
 
 						gridLayout.addView(editQty);
@@ -304,8 +325,7 @@ public class dynamic extends Activity
 						editCena = new EditText(dynamic.this);
 						editCena.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 						editCena.setBackgroundColor(WHITE);
-						editCena.setTextColor(0xFF004C00);
-						editCena.setGravity( CENTER );
+						editCena.setTextColor(GREEN);
 						editCena.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 						editCena.setInputType(2 | 8192);
 						editCena.setPadding(10, 0, 10, 0);
@@ -313,6 +333,7 @@ public class dynamic extends Activity
 						editCena.addTextChangedListener(getWatcher(r,c));
 						editCena.setLayoutParams(layoutParam);
 						int cenaid = (c*100 + r);
+						Log.d("CENA ID ", "CENA ID = " + cenaid);
 						editCena.setId(cenaid);
 
 						gridLayout.addView(editCena);
