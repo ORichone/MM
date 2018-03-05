@@ -1,9 +1,11 @@
 package com.example.ozolirih.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
@@ -21,6 +23,8 @@ import android.widget.AbsoluteLayout;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -42,6 +46,7 @@ import static android.view.Gravity.LEFT;
 import static android.view.Gravity.NO_GRAVITY;
 import static android.view.Gravity.RIGHT;
 import static android.view.Gravity.TOP;
+import static android.view.Gravity.getAbsoluteGravity;
 import static com.example.ozolirih.myapplication.R.layout.abc_activity_chooser_view;
 import static com.example.ozolirih.myapplication.R.layout.activity_second;
 
@@ -170,21 +175,8 @@ public class dynamic extends Activity
 
 		int column = 6;
 		int row = 20;
-		//int total = column * row;
 
-		ScrollView scrollView = new ScrollView(this);
 		gridLayout = new GridLayout(this);
-		scrollView.addView(gridLayout);
-		setContentView(scrollView);
-
-		/*GridLayout topLine = new GridLayout( this );
-		TextView total = new TextView( this );
-		total.setText( "RE kur IR" );
-		GridLayout.LayoutParams topLayout= new GridLayout.LayoutParams();
-		topLayout.setGravity( CENTER );
-		total.setLayoutParams( topLayout );
-		setContentView( topLine );*/
-
 		gridLayout.setColumnCount(column);
 		gridLayout.setRowCount(row);
 		gridLayout.setBackgroundColor(0xff000000);
@@ -367,5 +359,35 @@ public class dynamic extends Activity
 				}
 			}
 		}
+
+		RelativeLayout relativelayout = new RelativeLayout(this);
+		RelativeLayout.LayoutParams rlparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+		rlparams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+		LinearLayout linearlayout = new LinearLayout(this);
+		LinearLayout.LayoutParams llparam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+		linearlayout.setOrientation(LinearLayout.HORIZONTAL);
+		linearlayout.setBackgroundColor(Color.GREEN);
+		//linearlayout.setLayoutParams(llparam);
+
+
+
+		ScrollView scrollView = new ScrollView(this);
+		ScrollView.LayoutParams layoutParamsScroll = new ScrollView.LayoutParams( ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
+		scrollView.setLayoutParams(layoutParamsScroll);
+		scrollView.addView(gridLayout);
+
+
+
+		TextView lltext = new TextView(this);
+		lltext.setText("Shis ir kaut kads teksts");
+		linearlayout.addView(lltext);
+
+
+		relativelayout.addView(scrollView);
+		relativelayout.addView(linearlayout,rlparams);
+		setContentView(relativelayout);
+
+
 	}
 }
