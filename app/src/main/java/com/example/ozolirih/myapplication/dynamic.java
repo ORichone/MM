@@ -61,9 +61,16 @@ public class dynamic extends Activity
 	public EditText editCena;
 	public TextView showText;
 	public TextWatcher watcher;
-
+	public LinearLayout linearlayout;
 	public GridLayout gridLayout;
 	int r;
+
+/*##############################################################
+
+	WATCHER FOR FILLING SUM COLUMN
+
+##############################################################*/
+
 
 	protected TextWatcher getWatcher(int rinda, int colona){
 		final int row = rinda;
@@ -160,6 +167,9 @@ public class dynamic extends Activity
 
 				Log.d("DEBUG", "jaunaistxt2 = " + jaunaistxt2);
 
+				summaView.setPadding(10, 0, 10, 0);
+				summaView.setGravity(CENTER|LEFT);
+				summaView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 				summaView.setText(jaunaistxt2);
 				summaView.setLayoutParams(layoutParam);
 
@@ -167,7 +177,73 @@ public class dynamic extends Activity
 		};
 		return watcher;
 	}
-	@SuppressLint({"WrongConstant", "RtlHardcoded", "LongLogTag"})
+
+/*###########################################################
+
+		WATCHER FOR FILLING TOTAL SUM
+
+###########################################################*/
+
+	protected TextWatcher getWatcherTotalSum(int list){
+		final int lastrow = list;
+
+
+		watcher = new TextWatcher()
+		{
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count){}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+
+			@Override
+			public void afterTextChanged(Editable s)
+			{
+				double subsum = 0;
+
+				for (int rr = 1; rr < lastrow; rr++)
+				{
+					int summaid = ((5 * 100) + rr);
+					TextView totalSum = gridLayout.findViewById(summaid);
+
+					CharSequence ii = totalSum.getText();
+					String starp;
+					starp = String.valueOf(ii);
+					if (starp.length() > 0)
+					{
+						double number;
+						number = Double.parseDouble(starp);
+						subsum = subsum + number;
+					}
+				}
+				String totalsubsum = String.valueOf(subsum);
+				int asd =777;
+				TextView totalSum = linearlayout.findViewById(asd);
+				totalSum.setPadding(10, 0, 10, 0);
+				totalSum.setGravity(CENTER|LEFT);
+				totalSum.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+				totalSum.setText(totalsubsum);
+
+			}
+		};
+		return watcher;
+	}
+
+/*###########################################################
+
+		SUM COLUMN CALCULATION FUNCTION
+
+###########################################################*/
+
+	private static int calcsum()
+	{
+
+		return 0;
+	}
+
+
+	@SuppressLint({"WrongConstant", "RtlHardcoded", "LongLogTag", "ResourceType"})
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -183,10 +259,10 @@ public class dynamic extends Activity
 
 		Resources res = getResources();
 		String[] worktitle = res.getStringArray(R.array.maintitle);
+		int listSize = worktitle.length;
 
 		for ( int c = 0; c < 6; c++)
 		{
-			int listSize = worktitle.length;
 			for (r = 0; r < listSize; r++)
 			{
 				TextView textView = new TextView(this);
@@ -281,7 +357,7 @@ public class dynamic extends Activity
 					{
 						editQty = new EditText(dynamic.this);
 
-						editQty.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+						editQty.setImeOptions(EditorInfo.IME_ACTION_NEXT |  EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 						editQty.setBackgroundColor(WHITE);
 						editQty.setTextColor(RED);
 						editQty.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
@@ -315,7 +391,7 @@ public class dynamic extends Activity
 					else
 					{
 						editCena = new EditText(dynamic.this);
-						editCena.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+						editCena.setImeOptions(EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 						editCena.setBackgroundColor(WHITE);
 						editCena.setTextColor(GREEN);
 						editCena.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
@@ -353,6 +429,7 @@ public class dynamic extends Activity
 						int summaid = (c*100 + r);
 						Log.d("SUMMAID", "Summas ID = " + summaid);
 						showText.setId(summaid);
+						showText.addTextChangedListener(getWatcherTotalSum(listSize));
 						gridLayout.addView(showText);
 
 					}
@@ -364,23 +441,30 @@ public class dynamic extends Activity
 		RelativeLayout.LayoutParams rlparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
 		rlparams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
-		LinearLayout linearlayout = new LinearLayout(this);
-		LinearLayout.LayoutParams llparam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
-		linearlayout.setOrientation(LinearLayout.HORIZONTAL);
-		linearlayout.setBackgroundColor(Color.GREEN);
-		//linearlayout.setLayoutParams(llparam);
-
-
-
 		ScrollView scrollView = new ScrollView(this);
 		ScrollView.LayoutParams layoutParamsScroll = new ScrollView.LayoutParams( ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
 		scrollView.setLayoutParams(layoutParamsScroll);
 		scrollView.addView(gridLayout);
 
+		linearlayout = new LinearLayout(this);
+		linearlayout.setOrientation(LinearLayout.HORIZONTAL);
+		linearlayout.setBackgroundColor(Color.GREEN);
 
+		LinearLayout.LayoutParams llparam = new LinearLayout.LayoutParams(500, 90);
+		llparam.setMargins(5,5,5,5);
 
 		TextView lltext = new TextView(this);
-		lltext.setText("Shis ir kaut kads teksts");
+		lltext.setText("kaut kas bus");
+		lltext.setBackgroundColor(WHITE);
+		lltext.setId(777);
+
+		//int ssdassd;
+		int ssdassd = lltext.getId();
+		Log.d("TEXTVIEW ID", String.valueOf(ssdassd));
+
+
+
+		lltext.setLayoutParams(llparam);
 		linearlayout.addView(lltext);
 
 
