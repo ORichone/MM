@@ -21,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,8 +48,10 @@ import static android.view.Gravity.NO_GRAVITY;
 import static android.view.Gravity.RIGHT;
 import static android.view.Gravity.TOP;
 import static android.view.Gravity.getAbsoluteGravity;
+import static android.widget.ListPopupWindow.WRAP_CONTENT;
 import static com.example.ozolirih.myapplication.R.layout.abc_activity_chooser_view;
 import static com.example.ozolirih.myapplication.R.layout.activity_second;
+import static java.security.AccessController.getContext;
 
 /**
  * Created by ozolirih on 2017.12.22..
@@ -161,7 +164,7 @@ public class dynamic extends Activity
 				layoutParam.columnSpec = GridLayout.spec(5);
 				layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
 				layoutParam.setMargins(2, 2, 2, 2);
-				layoutParam.height = 150;
+				layoutParam.height = 75;
 				double roundOff = Math.round(jaunaistxt * 100.0) / 100.0;
 				String jaunaistxt2 = String.valueOf(roundOff);
 
@@ -257,6 +260,7 @@ public class dynamic extends Activity
 		gridLayout.setRowCount(row);
 		gridLayout.setBackgroundColor(0xff000000);
 
+
 		Resources res = getResources();
 		String[] worktitle = res.getStringArray(R.array.maintitle);
 		int listSize = worktitle.length;
@@ -277,6 +281,11 @@ public class dynamic extends Activity
 				layoutParam.rowSpec = GridLayout.spec(r);
 				layoutParam.columnSpec = GridLayout.spec(c);
 				layoutParam.setGravity(CENTER);
+				//layoutParam.height = (WRAP_CONTENT);
+				final float scale = getResources().getDisplayMetrics().density;
+				int pixels = (int) (50 * scale + 0.5f);
+
+				layoutParam.height = pixels;
 
 				if (c == 0)
 				{
@@ -291,8 +300,11 @@ public class dynamic extends Activity
 						textView.setBackgroundColor(RED);
 					}
 
-					layoutParam.width = 50;
-					layoutParam.height = 150;
+
+					final float sscale = getResources().getDisplayMetrics().density;
+					int pixelis = (int) (50 * sscale + 0.5f);
+
+					layoutParam.width = pixels;
 
 					textView.setLayoutParams(layoutParam);
 					gridLayout.addView(textView);
@@ -305,13 +317,13 @@ public class dynamic extends Activity
 					if (r == 0)
 					{
 						//textView.setGravity(CENTER_VERTICAL);
-						textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+						textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
 						textView.setPadding(0, 0, 0, 0);
 						layoutParam.setGravity(BOTTOM);
 					}
 					textView.setText(worktitle[r]);
-					layoutParam.width = 750;
-					layoutParam.height = 150;
+					layoutParam.width = 450;
+					//layoutParam.height = 150;
 
 					textView.setLayoutParams(layoutParam);
 					gridLayout.addView(textView);
@@ -320,8 +332,8 @@ public class dynamic extends Activity
 
 				if (c == 2)
 				{
-					layoutParam.width = 150;
-					layoutParam.height = 150;
+					layoutParam.width = 100;
+					//layoutParam.height = 150;
 					layoutParam.setGravity(CENTER|LEFT);
 					textView.setLayoutParams(layoutParam);
 
@@ -340,8 +352,8 @@ public class dynamic extends Activity
 				}
 				if (c == 3)
 				{
-					layoutParam.width = 250;
-					layoutParam.height = 150;
+					layoutParam.width = 180;
+					//layoutParam.height = 150;
 					layoutParam.setGravity(CENTER|RIGHT);
 
 					if (r == 0)
@@ -360,7 +372,7 @@ public class dynamic extends Activity
 						editQty.setImeOptions(EditorInfo.IME_ACTION_NEXT |  EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 						editQty.setBackgroundColor(WHITE);
 						editQty.setTextColor(RED);
-						editQty.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+						editQty.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 						editQty.setInputType(2 | 8192);
 						editQty.setPadding(10, 0, 10, 0);
 						editQty.setGravity(CENTER|RIGHT);
@@ -377,7 +389,7 @@ public class dynamic extends Activity
 				if (c == 4)
 				{
 					layoutParam.width = 180;
-					layoutParam.height = 150;
+					//layoutParam.height = 150;
 					layoutParam.setGravity(CENTER|LEFT);
 					if (r == 0)
 					{
@@ -411,7 +423,7 @@ public class dynamic extends Activity
 				if (c == 5)
 				{
 					layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
-					layoutParam.height = 150;
+					//layoutParam.height = 150;
 
 					if (r == 0)
 					{
@@ -439,7 +451,7 @@ public class dynamic extends Activity
 
 		RelativeLayout relativelayout = new RelativeLayout(this);
 		RelativeLayout.LayoutParams rlparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
-		rlparams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		rlparams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
 		ScrollView scrollView = new ScrollView(this);
 		ScrollView.LayoutParams layoutParamsScroll = new ScrollView.LayoutParams( ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
@@ -469,7 +481,7 @@ public class dynamic extends Activity
 
 
 		relativelayout.addView(scrollView);
-		relativelayout.addView(linearlayout,rlparams);
+		//relativelayout.addView(linearlayout,rlparams);
 		setContentView(relativelayout);
 
 
