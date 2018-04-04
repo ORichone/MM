@@ -103,22 +103,17 @@ public class dynamic extends Activity
 				double jaunaistxt1 = Double.parseDouble(myString);
 				double jaunaistxt = 0;
 
-				Log.d("DEBUG", "Iegutais jaunais txt no view = " + jaunaistxt1 );
-				Log.d("ROW", "ROW = " + row);
-				Log.d("COL", "COL = " + col);
 
-				int viewID = 0;
+				int viewID;
 				int summaid = ((5 * 100) + row);
 				TextView summaView = gridLayout.findViewById(summaid);
-				Log.d("DEBUG", "Summa ID = " + summaid );
+				//Log.d("DEBUG", "Summa ID = " + summaid );
 
 				if (col == 3)
 				{
 					viewID = (((col+1) * 100) + row);
 					TextView cenaView = gridLayout.findViewById(viewID);
 					CharSequence ii = cenaView.getText();
-					Log.d("DEBUG", "rrrrooooowww " + row );
-					Log.d("DEBUG", "Text to col + 1 = " + ii );
 					if (ii.length() == 0)
 					{
 						ii = "0";
@@ -128,16 +123,12 @@ public class dynamic extends Activity
 					double number;
 					number = Double.parseDouble(starpa);
 					jaunaistxt = (number * jaunaistxt1);
-					Log.d("DEBUG", "Cenaview ID  = " + viewID );
-					Log.d("DEBUG", " CenaView number = " + number );
-
 				}
 				else if (col == 4)
 				{
 					viewID = (((col-1) * 100) + row);
 					TextView qtyView = gridLayout.findViewById(viewID);
 					CharSequence ii = qtyView.getText();
-					Log.d("DEBUG", "II" + ii );
 					if (ii.length() == 0)
 					{
 						ii = "0";
@@ -147,28 +138,16 @@ public class dynamic extends Activity
 					double number;
 					number = Double.parseDouble(starpa);
 					jaunaistxt = (number * jaunaistxt1);
-					Log.d("DEBUG", " qtyView ID  = " + viewID );
-					Log.d("DEBUG", " qtyView number = " + number );
-
 				}
-
-				Log.d("DEBUG", "ViewID  = " + viewID );
-				Log.d("DEBUG", "SummID = " + summaid);
-				Log.d("DEBUG", "jaunaistxt = " + jaunaistxt);
-
-
-
-
 
 				layoutParam.rowSpec = GridLayout.spec(row);
 				layoutParam.columnSpec = GridLayout.spec(5);
 				layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
 				layoutParam.setMargins(2, 2, 2, 2);
-				layoutParam.height = 75;
+				layoutParam.height = pixToDp(50);
+
 				double roundOff = Math.round(jaunaistxt * 100.0) / 100.0;
 				String jaunaistxt2 = String.valueOf(roundOff);
-
-				Log.d("DEBUG", "jaunaistxt2 = " + jaunaistxt2);
 
 				summaView.setPadding(10, 0, 10, 0);
 				summaView.setGravity(CENTER|LEFT);
@@ -226,7 +205,7 @@ public class dynamic extends Activity
 				totalSum.setPadding(10, 0, 10, 0);
 				totalSum.setGravity(CENTER|LEFT);
 				totalSum.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-				totalSum.setText(totalsubsum);
+				totalSum.setText("TOTAL:   " + totalsubsum);
 
 			}
 		};
@@ -235,14 +214,16 @@ public class dynamic extends Activity
 
 /*###########################################################
 
-		SUM COLUMN CALCULATION FUNCTION
+		On Create
 
 ###########################################################*/
 
-	private static int calcsum()
+	private int pixToDp(int dps)
 	{
+		final float scale = getResources().getDisplayMetrics().density;
+		int pixelis = (int) (dps * scale + 0.5f);
 
-		return 0;
+		return pixelis;
 	}
 
 
@@ -281,11 +262,8 @@ public class dynamic extends Activity
 				layoutParam.rowSpec = GridLayout.spec(r);
 				layoutParam.columnSpec = GridLayout.spec(c);
 				layoutParam.setGravity(CENTER);
-				//layoutParam.height = (WRAP_CONTENT);
-				final float scale = getResources().getDisplayMetrics().density;
-				int pixels = (int) (50 * scale + 0.5f);
 
-				layoutParam.height = pixels;
+				layoutParam.height = pixToDp(50);
 
 				if (c == 0)
 				{
@@ -300,11 +278,7 @@ public class dynamic extends Activity
 						textView.setBackgroundColor(RED);
 					}
 
-
-					final float sscale = getResources().getDisplayMetrics().density;
-					int pixelis = (int) (50 * sscale + 0.5f);
-
-					layoutParam.width = pixels;
+					layoutParam.width = pixToDp(20);
 
 					textView.setLayoutParams(layoutParam);
 					gridLayout.addView(textView);
@@ -312,7 +286,8 @@ public class dynamic extends Activity
 				}
 
 				if (c == 1)
-				{textView.setGravity(CENTER_VERTICAL);
+				{
+					textView.setGravity(CENTER_VERTICAL);
 					textView.setPadding(25, 0, 0, 0);
 					if (r == 0)
 					{
@@ -322,8 +297,8 @@ public class dynamic extends Activity
 						layoutParam.setGravity(BOTTOM);
 					}
 					textView.setText(worktitle[r]);
-					layoutParam.width = 450;
-					//layoutParam.height = 150;
+
+					layoutParam.width = pixToDp(250);
 
 					textView.setLayoutParams(layoutParam);
 					gridLayout.addView(textView);
@@ -332,8 +307,7 @@ public class dynamic extends Activity
 
 				if (c == 2)
 				{
-					layoutParam.width = 100;
-					//layoutParam.height = 150;
+					layoutParam.width = pixToDp(50);
 					layoutParam.setGravity(CENTER|LEFT);
 					textView.setLayoutParams(layoutParam);
 
@@ -352,8 +326,7 @@ public class dynamic extends Activity
 				}
 				if (c == 3)
 				{
-					layoutParam.width = 180;
-					//layoutParam.height = 150;
+					layoutParam.width = pixToDp(90);
 					layoutParam.setGravity(CENTER|RIGHT);
 
 					if (r == 0)
@@ -388,9 +361,8 @@ public class dynamic extends Activity
 
 				if (c == 4)
 				{
-					layoutParam.width = 180;
-					//layoutParam.height = 150;
-					layoutParam.setGravity(CENTER|LEFT);
+					layoutParam.width = pixToDp(90);
+					//layoutParam.setGravity(CENTER|LEFT);
 					if (r == 0)
 					{
 						String cena = "Cena";
@@ -410,6 +382,7 @@ public class dynamic extends Activity
 						editCena.setInputType(2 | 8192);
 						editCena.setPadding(10, 0, 10, 0);
 						editCena.setText("2");
+						editCena.setGravity(CENTER_VERTICAL| RIGHT );
 						editCena.addTextChangedListener(getWatcher(r,c));
 						editCena.setLayoutParams(layoutParam);
 						int cenaid = (c*100 + r);
@@ -423,7 +396,6 @@ public class dynamic extends Activity
 				if (c == 5)
 				{
 					layoutParam.setGravity(CENTER|FILL_HORIZONTAL);
-					//layoutParam.height = 150;
 
 					if (r == 0)
 					{
@@ -449,39 +421,46 @@ public class dynamic extends Activity
 			}
 		}
 
+
+		//Create Realative layout
 		RelativeLayout relativelayout = new RelativeLayout(this);
-		RelativeLayout.LayoutParams rlparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+		int lineraLayoutHeight = pixToDp(50);
+		RelativeLayout.LayoutParams rlparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, lineraLayoutHeight);
 		rlparams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
+
+
+		//Create Scroll view
 		ScrollView scrollView = new ScrollView(this);
 		ScrollView.LayoutParams layoutParamsScroll = new ScrollView.LayoutParams( ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
+		int scrollViewTopMargin= pixToDp(50);
+		layoutParamsScroll.setMargins( 0,  scrollViewTopMargin,0,0 );
 		scrollView.setLayoutParams(layoutParamsScroll);
 		scrollView.addView(gridLayout);
 
+
+		//Create Linear Layout
 		linearlayout = new LinearLayout(this);
 		linearlayout.setOrientation(LinearLayout.HORIZONTAL);
 		linearlayout.setBackgroundColor(Color.GREEN);
 
-		LinearLayout.LayoutParams llparam = new LinearLayout.LayoutParams(500, 90);
-		llparam.setMargins(5,5,5,5);
+		int textViewHeight = pixToDp(40);
+		int textViewWidth  = pixToDp(150);
+		LinearLayout.LayoutParams linearLayoutChildParams= new LinearLayout.LayoutParams( textViewWidth, textViewHeight );
+		int textViewMargins = pixToDp( 5 );
+		linearLayoutChildParams.setMargins(textViewMargins ,textViewMargins ,textViewMargins ,textViewMargins );
 
+		//Create Text View
 		TextView lltext = new TextView(this);
 		lltext.setText("kaut kas bus");
 		lltext.setBackgroundColor(WHITE);
 		lltext.setId(777);
+		lltext.setLayoutParams(linearLayoutChildParams);
 
-		//int ssdassd;
-		int ssdassd = lltext.getId();
-		Log.d("TEXTVIEW ID", String.valueOf(ssdassd));
-
-
-
-		lltext.setLayoutParams(llparam);
+		//Add Views to their parents
 		linearlayout.addView(lltext);
-
-
 		relativelayout.addView(scrollView);
-		//relativelayout.addView(linearlayout,rlparams);
+		relativelayout.addView(linearlayout,rlparams);
 		setContentView(relativelayout);
 
 
